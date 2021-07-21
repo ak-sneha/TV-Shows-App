@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TV Shows App</string>
+
+    // Imitation
+    <string name="fake_title">Action Show</string>
+    <string name="fake_summary">Spoof spy action-thriller series following the exploits of a top-secret team of special agents</string>
 </resources>
