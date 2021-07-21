@@ -1,0 +1,53 @@
+
+Tasks:
+
+1. Read the json response from TV maze and understand the data models
+
+2. Identify the functional use cases
+	- show list of movies using paging
+	- on selection of list item show the movie details
+	
+3. Identify the non-functional use cases
+	- If internet is not available, show error toast message
+	- If show list is empty show info on screen
+	- If image is not available, show empty place-holder at place of image
+	
+3. Design the UI mockups. 
+	- One screen with List view (Grid).
+	- Second screen to show details of Show.
+
+4. Design the application using clean architecture
+
+5. Create a repository for android project.	
+
+6. Create a package structures for clean architecture
+	- "app" module is main module
+		- Add package framework
+		- Add package presentation
+	- create a new "core" module
+		- Add package interactors
+		- Add package data
+		- Add package domain
+		
+7. Create a splash screen
+
+8. Create a main screen UI
+	- Add a Recylcer view with span as 2
+	- implement UI stuff in presentation package 
+	- create a view model for screen
+
+8. Create a Detailed screen
+	- Create UI to show details of show 
+	- implement UI stuff in presentation package
+	- Create a view model for detail screen
+	
+9. Use Retrofit for Network operations. 
+	- Create domain model classes in domain package 
+	- an interface for service to make API request in data package.  
+	- implementaion of service data source in framework package.
+
+10. Implement use cases in interactor package
+
+11. Write J-unit test cases for each module
+
+
