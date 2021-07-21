@@ -3,16 +3,15 @@ package com.example.tvshowsapp.presentation.activities
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
+import com.example.tvshowsapp.R
 import com.example.tvshowsapp.databinding.ActivityMainBinding
-import com.example.tvshowsapp.presentation.adapter.ShowsListAdapter
-import com.example.tvshowsapp.presentation.extensions.init
 import com.example.tvshowsapp.presentation.extensions.observeWith
-import com.example.tvshowsapp.presentation.extensions.toast
+import com.example.tvshowsapp.presentation.fragments.ShowDetailsFragment
+import com.example.tvshowsapp.presentation.fragments.ShowListFragment
 import com.example.tvshowsapp.presentation.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var showsAdapter: ShowsListAdapter
 
     private val viewModel: MainViewModel by viewModels { defaultViewModelProviderFactory }
     private lateinit var binding: ActivityMainBinding
@@ -22,20 +21,28 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initUi()
-        observeViewModel()
-        viewModel.getShows()
-    }
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add(R.id.fragment_container_view, ShowListFragment())
+            }
+        }
 
-    private fun initUi() {
-        ShowsListAdapter { item: String -> toast("Item clicked $item") }.also { showsAdapter = it }
-        binding.recyclerView.init(adapter = showsAdapter)
+        observeViewModel()
     }
 
     private fun observeViewModel() = with(viewModel) {
-        showsData.observeWith(this@MainActivity) {
+        selectedItem.observeWith(this@MainActivity) {
 
-            it.let { showsAdapter.add(it as MutableList<String>) }
+            it.let {
+                supportFragmentManager.commit {
+                    replace(R.id.fragment_container_view, ShowDetailsFragment.newInstance(it))
+                    setReorderingAllowed(true)
+                    addToBackStack("list")
+//                    setReorderingAllowed(true)
+//                    add(R.id.fragment_container_view, ShowListFragment())
+                }
+            }
         }
     }
 }
