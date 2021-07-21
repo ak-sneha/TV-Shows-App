@@ -15,6 +15,7 @@
  */
 package com.example.tvshowsapp.presentation.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -22,7 +23,11 @@ class MainViewModel : ViewModel() {
 
     val showsData = MutableLiveData<List<String>>()
 
-    private var tempList: List<String>? = null
+    private var tempList: List<String> = listOf()
+
+    private val mutableSelectedItem = MutableLiveData<String>()
+    val selectedItem: LiveData<String> get() = mutableSelectedItem
+
 
     init {
         tempList = listOf(
@@ -35,4 +40,7 @@ class MainViewModel : ViewModel() {
         showsData.postValue(tempList)
     }
 
+    fun selectItem(item: String) {
+        mutableSelectedItem.value = item
+    }
 }

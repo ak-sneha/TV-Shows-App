@@ -21,7 +21,7 @@ class ShowsListAdapter(val clickListener: (String) -> Unit) :
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         with(showsList[position]) {
             holder.binding.tvName.text = this
-            holder.binding.root.setOnClickListener { clickListener(this) }
+            holder.binding.rootLayout.setOnClickListener { clickListener(this) }
         }
     }
 
