@@ -1,5 +1,6 @@
 package com.example.tvshowsapp.presentation.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
@@ -11,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.core.domain.TVSeries
 import com.example.tvshowsapp.R
 import com.example.tvshowsapp.databinding.FragmentSeriesDetailsBinding
-import com.example.tvshowsapp.framework.Network
+import com.example.tvshowsapp.framework.NetworkInfo
 import com.example.tvshowsapp.presentation.extensions.toast
 
 
@@ -48,12 +49,13 @@ class SeriesDetailsFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initUi() {
         binding.tvShowName.text = title
         binding.tvRatings.text = " ${getString(R.string.ratings)} $ratings"
-        binding.tvShowDetails.setMovementMethod(ScrollingMovementMethod())
+        binding.tvShowDetails.movementMethod = ScrollingMovementMethod()
         binding.tvShowDetails.text = HtmlCompat.fromHtml(details ?: "", 0)
-        if (context?.let { Network.isNetworkAvailable(it) } == true) {
+        if (context?.let { NetworkInfo.isNetworkAvailable(it) } == true) {
             imageUrl?.let {
                 Glide.with(this)
                     .load(it)
@@ -62,7 +64,7 @@ class SeriesDetailsFragment : Fragment() {
             binding.progressBar.visibility = View.GONE
         } else {
             binding.progressBar.visibility = View.GONE
-            toast(getString(R.string.network_error));
+            toast(getString(R.string.network_error))
         }
     }
 
@@ -73,7 +75,7 @@ class SeriesDetailsFragment : Fragment() {
             SeriesDetailsFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_TITLE, item.name ?: " ")
-                    putString(ARG_RATINGS, item.rating?.average.toString() ?: " ")
+                    putString(ARG_RATINGS, item.rating?.average.toString())
                     putString(ARG_DETAILS, item.summary ?: " ")
                     putString(ARG_IMAGE, item.image?.original ?: " ")
                 }

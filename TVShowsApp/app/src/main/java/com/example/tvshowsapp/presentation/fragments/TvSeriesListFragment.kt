@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.core.domain.TVSeries
 import com.example.tvshowsapp.R
 import com.example.tvshowsapp.databinding.FragmentSeriesListBinding
-import com.example.tvshowsapp.framework.Network
+import com.example.tvshowsapp.framework.NetworkInfo
 import com.example.tvshowsapp.presentation.adapter.TvSeriesListAdapter
 import com.example.tvshowsapp.presentation.extensions.init
 import com.example.tvshowsapp.presentation.extensions.observeWith
@@ -39,7 +39,7 @@ class TvSeriesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (context?.let { Network.isNetworkAvailable(it) } == true) {
+        if (context?.let { NetworkInfo.isNetworkAvailable(it) } == true) {
             viewModel.getShows()
         } else {
             binding.progressBar.visibility = View.GONE

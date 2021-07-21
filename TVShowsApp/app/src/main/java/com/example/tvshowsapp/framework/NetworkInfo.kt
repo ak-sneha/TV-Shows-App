@@ -6,7 +6,7 @@ import android.os.Build
 import androidx.core.content.ContextCompat.getSystemService
 
 
-class Network {
+class NetworkInfo {
 
     companion object {
         fun isNetworkAvailable(context: Context): Boolean {
