@@ -18,29 +18,25 @@ package com.example.tvshowsapp.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.core.domain.TVSeries
+import com.example.tvshowsapp.framework.Interactors
+import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
-
-    val showsData = MutableLiveData<List<String>>()
-
-    private var tempList: List<String> = listOf()
-
-    private val mutableSelectedItem = MutableLiveData<String>()
-    val selectedItem: LiveData<String> get() = mutableSelectedItem
+class MainViewModel(val interactors: Interactors) : ViewModel() {
 
 
-    init {
-        tempList = listOf(
-            "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6",
-            "Item 7", "Item 8", "Item 9", "Item 10"
-        )
-    }
+    val mutableTvSeriesList = MutableLiveData<List<TVSeries>>()
+//    val tvSeriesList: LiveData<List<TVSeries>> get() = mutableTvSeriesList
+
+    private val mutableSelectedItem = MutableLiveData<TVSeries>()
+    val selectedItem: LiveData<TVSeries> get() = mutableSelectedItem
 
     fun getShows() {
-        showsData.postValue(tempList)
+        viewModelScope.launch { mutableTvSeriesList.postValue(interactors.getTvSeries.invoke()) }
     }
 
-    fun selectItem(item: String) {
+    fun selectItem(item: TVSeries) {
         mutableSelectedItem.value = item
     }
 }

@@ -6,14 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.example.tvshowsapp.R
 import com.example.tvshowsapp.databinding.ActivityMainBinding
+import com.example.tvshowsapp.framework.TvShowsViewModelFactory
 import com.example.tvshowsapp.presentation.extensions.observeWith
-import com.example.tvshowsapp.presentation.fragments.ShowDetailsFragment
-import com.example.tvshowsapp.presentation.fragments.ShowListFragment
+import com.example.tvshowsapp.presentation.fragments.SeriesDetailsFragment
+import com.example.tvshowsapp.presentation.fragments.TvSeriesListFragment
 import com.example.tvshowsapp.presentation.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainViewModel by viewModels { defaultViewModelProviderFactory }
+    private val viewModel: MainViewModel by viewModels { TvShowsViewModelFactory }
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add(R.id.fragment_container_view, ShowListFragment())
+                add(R.id.fragment_container_view, TvSeriesListFragment())
             }
         }
 
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
             it.let {
                 supportFragmentManager.commit {
-                    replace(R.id.fragment_container_view, ShowDetailsFragment.newInstance(it))
+                    replace(R.id.fragment_container_view, SeriesDetailsFragment.newInstance(it))
                     setReorderingAllowed(true)
                     addToBackStack("list")
 //                    setReorderingAllowed(true)
